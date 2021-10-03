@@ -32,7 +32,7 @@ async function getSheetData() {
         container.badge = item.badge;
         container.date = [item.date_from, item.date_to];
         container.description = item.description;
-
+        container.type = "event";
         return container;
     })
     return daysOfWeek
