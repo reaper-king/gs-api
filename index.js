@@ -3,16 +3,15 @@ var { GoogleSpreadsheet } = require('google-spreadsheet');
 var cors = require('cors')
 const doc = new GoogleSpreadsheet('16lDK6kgt3BjVEvh5rQqLP7p0uyWoiJxHIkXMHIUrA8g');
 
+const Websocket = require('ws');
+
+let HOST = 'wss://morning-wildwood-26656.herokuapp.com'
+let ws = new Websocket(HOST);
 
 var express = require("express");
 
 var app = express();
 
-
-
-var enableWs = require('express-ws');
-
-enableWs(app)
 
 async function getBloodLevel() {
     // Initialize Auth - see more available options at https://theoephraim.github.io/node-google-spreadsheet/#/getting-started/authentication
@@ -137,20 +136,7 @@ app.get("/subscribe", cors(), async(req, res, next) => {
 // WS - 
 
 
-
-// app.ws('/', (ws, req) => {
-//     ws.on('message', msg => {
-//         ws.send(msg)
-
-//         console.log(msg);
-//     })
-
-//     ws.on('close', () => {
-//         console.log('WebSocket was closed')
-//     })
-// })
-
-app.ws('/', function(ws, req) {
-    ws.on('message', function(msg) {});
-    console.log('socket', req.testing);
+app.post('/', function(req, res) {
+    ws.send(req.query.msg)
+        // console.log('socket', req.testing);
 });
