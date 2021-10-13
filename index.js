@@ -136,7 +136,7 @@ app.get("/subscribe", cors(), async(req, res, next) => {
 // WS - 
 
 
-app.post('/', function(req, res) {
-    ws.send(req.query.msg)
-        // console.log('socket', req.testing);
+app.get('/ws',  cors(), function(req, res) {
+    ws.send(req.query.msg) 
+    res.status(200).send({ message: "" });
 });
