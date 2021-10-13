@@ -5,10 +5,14 @@ const doc = new GoogleSpreadsheet('16lDK6kgt3BjVEvh5rQqLP7p0uyWoiJxHIkXMHIUrA8g'
 
 
 var express = require("express");
+
 var app = express();
 
 
 
+var enableWs = require('express-ws');
+
+enableWs(app)
 
 async function getBloodLevel() {
     // Initialize Auth - see more available options at https://theoephraim.github.io/node-google-spreadsheet/#/getting-started/authentication
@@ -127,4 +131,26 @@ app.get("/subscribe", cors(), async(req, res, next) => {
     let respo = await addSheetData(req.query.name, req.query.email);
     res.json(req.status);
     // console.log(req.query.name)
+});
+
+
+// WS - 
+
+
+
+// app.ws('/', (ws, req) => {
+//     ws.on('message', msg => {
+//         ws.send(msg)
+
+//         console.log(msg);
+//     })
+
+//     ws.on('close', () => {
+//         console.log('WebSocket was closed')
+//     })
+// })
+
+app.ws('/', function(ws, req) {
+    ws.on('message', function(msg) {});
+    console.log('socket', req.testing);
 });
